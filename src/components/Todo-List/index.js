@@ -2,18 +2,39 @@ import React, { useState } from 'react'
 import { Col, Row, Input, Button, Select, Tag } from 'antd';
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
+import './index.css'
 import Todo from '../Todo/index';
 import { ADD_TODO } from '../../redux/actions/todo';
 
 const TodoList = () => {
 
     const dispatch = useDispatch();
-    const searchText = useSelector((state) => state.filter.search)
+    const searchText = useSelector((state) => state.filter.search);
+    const searchStatus = useSelector((state) => state.filter.status);
+    const searchPriority = useSelector((state) => state.filter.priority);
     //List Todo filterd by searchText (lowercase)
     const listTodo = useSelector((state) => {
         const todoListFilter = state.todo.todo.filter(item => {
-            return item.name.toLowerCase().includes(searchText.toLowerCase()) ||
-                    item.priority.toLowerCase().includes(searchText.toLowerCase())
+            if (searchStatus === 'All') {
+                return (searchPriority.length ?
+                    (item.name.toLowerCase().includes(searchText.toLowerCase()) ||
+                        item.priority.toLowerCase().includes(searchText.toLowerCase())) &&
+                    searchPriority.includes(item.priority)
+                    :
+                    (item.name.toLowerCase().includes(searchText.toLowerCase()) ||
+                        item.priority.toLowerCase().includes(searchText.toLowerCase())))
+            }
+            else {
+                return (searchPriority.length ?
+                    (searchPriority.includes(item.priority) &&
+                        (item.name.toLowerCase().includes(searchText.toLowerCase()) ||
+                            item.priority.toLowerCase().includes(searchText.toLowerCase())) &&
+                        (searchStatus === 'Completed' ? item.compeleted : !item.compeleted)) : (
+                        (item.name.toLowerCase().includes(searchText.toLowerCase()) ||
+                            item.priority.toLowerCase().includes(searchText.toLowerCase())) &&
+                        (searchStatus === 'Completed' ? item.compeleted : !item.compeleted))
+                )
+            }
         })
         return todoListFilter
     });
@@ -60,9 +81,17 @@ const TodoList = () => {
     }
     return (
         <Row style={{ height: 'calc(100% - 40px)' }}>
-            <Col span={24} style={{ height: 'calc(100% - 40px)', overflowY: 'auto' }}>
+            <Col className='body' span={24} style={{ height: 'calc(100% - 40px)', overflowY: 'auto' }}>
                 {/* <Todo name='haha' priority='Meidum'/> */}
-                {listTodo.map((todo) => <div key={todo.id} ><Todo id={todo.id} name={todo.name} priority={todo.priority} /><hr /></div>)}
+                {listTodo.length ?
+                    listTodo.map((todo) =>
+                        <div key={todo.id} ><Todo id={todo.id} name={todo.name} priority={todo.priority} compeleted={todo.compeleted} />
+                            <hr />
+                        </div>) :
+                    <div className="Empty">
+                        <p>Empty Todo</p>
+                    </div>
+                }
             </Col>
             <Col span={24}>
                 <Input.Group style={{ display: 'flex' }} compact>

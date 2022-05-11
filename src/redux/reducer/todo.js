@@ -40,7 +40,7 @@ const todoListReducer = (state = initState, action) => {
             };
 
         case 'todo/completedTodo':
-            console.log(state.todo)
+            // console.log(state.todo)
             const newTodo = state.todo.map(item => 
                 item.id === action.payload.id ? action.payload : item
                 )

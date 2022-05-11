@@ -1,0 +1,15 @@
+
+.Empty{
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%,-100%);
+}
+
+.Empty > p{
+        text-align: center;
+        font-size:44px;
+        color: rgb(224,220,220);
+        cursor: default;
+}

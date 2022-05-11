@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Col, Row, Input, Typography, Radio, Select, Tag } from 'antd';
 import { useDispatch } from 'react-redux';
-import {SEARCH_TODO} from '../../redux/actions/filter'
+import { SEARCH_TODO, STATUS_TODO, PRIORITY_TODO } from '../../redux/actions/filter'
 
 
 const { Search } = Input;
@@ -9,15 +9,27 @@ const { Search } = Input;
 const Search_Filter = () => {
 
     const dispatch = useDispatch();
-
+    //text-search
     const [searchText, setSearchText] = useState('');
     const handleSearchTextChange = (e) => {
-        setSearchText(e.target.value)
+        setSearchText(e.target.value);
         dispatch(SEARCH_TODO(
             e.target.value
-        ))
+        ));
+    };
+    //status-search
+    const [searchStatus, setSearchStatus] = useState('All');
+    const handleSearchStatusChange = (e) => {
+        setSearchStatus(e.target.value);
+        dispatch(STATUS_TODO(e.target.value));
+    };
+    //priority-search
+    //select mode: multiple return result array value
+    const [searchPriority, setSearchPriority] = useState([]);
+    const handleSearchPriorityChange = (value) => {
+        setSearchPriority(value);
+        dispatch(PRIORITY_TODO(value));
     }
-
 
     let body = (
         <Row justify='center'>
@@ -27,7 +39,7 @@ const Search_Filter = () => {
                 >
                     Search
                 </Typography.Paragraph>
-                <Search placeholder='input search text' value={searchText} onChange={handleSearchTextChange}/>
+                <Search placeholder='input search text' value={searchText} onChange={handleSearchTextChange} />
             </Col>
             <Col sm={24}>
                 <Typography.Paragraph
@@ -35,7 +47,7 @@ const Search_Filter = () => {
                 >
                     Filter By Status
                 </Typography.Paragraph>
-                <Radio.Group>
+                <Radio.Group value={searchStatus} onChange={handleSearchStatusChange}>
                     <Radio value='All'>All</Radio>
                     <Radio value='Completed'>Completed</Radio>
                     <Radio value='Todo'>To do</Radio>
@@ -52,6 +64,8 @@ const Search_Filter = () => {
                     allowClear
                     placeholder='Please select'
                     style={{ width: '100%' }}
+                    value={searchPriority}
+                    onChange={handleSearchPriorityChange}
                 >
                     <Select.Option value='High' label='High'>
                         <Tag color='red'>High</Tag>
