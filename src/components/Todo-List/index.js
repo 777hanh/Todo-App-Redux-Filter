@@ -98,7 +98,7 @@ const TodoList = () => {
                     {/* input todo name */}
                     <Input name='name' value={dataForm.name} onChange={onChangeInput} placeholder='Todo Name' />
                     {/* select priority */}
-                    <Select defaultValue={dataForm.priority} value={dataForm.priority} onChange={onChangePriority} style={{ width: '30%', textAlign: 'center' }}>
+                    <Select placement='topLeft' defaultValue={dataForm.priority} value={dataForm.priority} onChange={onChangePriority} style={{ width: '30%', textAlign: 'center' }}>
                         <Select.Option value='High' label='High'>
                             <Tag color='red'>High</Tag>
                         </Select.Option>
