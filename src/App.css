@@ -4,6 +4,10 @@
   height: 100px;
 }
 
+html > #root > body{
+  height: 0;
+  width: 0;
+}
 
 .App-body {
   width: 80vh;
