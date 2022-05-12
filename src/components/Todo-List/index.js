@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { Col, Row, Input, Button, Select, Tag } from 'antd';
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,6 +8,7 @@ import { ADD_TODO } from '../../redux/actions/todo';
 
 const TodoList = () => {
 
+    const refFocus = useRef();
     const dispatch = useDispatch();
     const searchText = useSelector((state) => state.filter.search);
     const searchStatus = useSelector((state) => state.filter.status);
@@ -74,6 +75,7 @@ const TodoList = () => {
                 dataForm
             }));
             clear();
+            refFocus.current.focus();
         }
         else {
 
@@ -96,7 +98,7 @@ const TodoList = () => {
             <Col span={24}>
                 <Input.Group style={{ display: 'flex' }} compact>
                     {/* input todo name */}
-                    <Input name='name' value={dataForm.name} onChange={onChangeInput} placeholder='Todo Name' />
+                    <Input name='name' value={dataForm.name} onChange={onChangeInput} placeholder='Todo Name' ref={refFocus}/>
                     {/* select priority */}
                     <Select placement='topLeft' defaultValue={dataForm.priority} value={dataForm.priority} onChange={onChangePriority} style={{ width: '30%', textAlign: 'center' }}>
                         <Select.Option value='High' label='High'>
