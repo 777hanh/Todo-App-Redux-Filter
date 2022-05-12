@@ -42,7 +42,7 @@ const Todo = ({ name, priority, id, compeleted }) => {
 
     const handleEditButton = (e) => {
         e.stopPropagation(); // do not do event of Parent element
-        alert('Chưa làm Edit');
+        alert('Edit sẽ làm sau');
     }
 
     return (
