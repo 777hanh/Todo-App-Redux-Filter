@@ -80,8 +80,8 @@ const TodoList = () => {
         }
     }
     return (
-        <Row style={{ height: 'calc(100% - 40px)' }}>
-            <Col className='body' span={24} style={{ height: 'calc(100% - 40px)', overflowY: 'auto' }}>
+        <Row >
+            <Col className='body-column' span={24} style={{ overflowY: 'scroll' }}>
                 {/* <Todo name='haha' priority='Meidum'/> */}
                 {listTodo.length ?
                     listTodo.map((todo) =>
