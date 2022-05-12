@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Col, Row, Input, Typography, Radio, Select, Tag } from 'antd';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { SEARCH_TODO, STATUS_TODO, PRIORITY_TODO } from '../../redux/actions/filter'
 
 
@@ -9,6 +9,8 @@ const { Search } = Input;
 const Search_Filter = () => {
 
     const dispatch = useDispatch();
+    const statusState = useSelector((state)=> state.filter.status)
+    console.log(statusState);
     //text-search
     const [searchText, setSearchText] = useState('');
     const handleSearchTextChange = (e) => {
@@ -18,7 +20,7 @@ const Search_Filter = () => {
         ));
     };
     //status-search
-    const [searchStatus, setSearchStatus] = useState('All');
+    const [searchStatus, setSearchStatus] = useState(statusState);
     const handleSearchStatusChange = (e) => {
         setSearchStatus(e.target.value);
         dispatch(STATUS_TODO(e.target.value));

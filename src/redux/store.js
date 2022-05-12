@@ -11,9 +11,21 @@ const loadState = () => {
         return undefined;
     }
 }
+
+function stateInitSave(state) {
+    return {
+        "filter":{
+            "search":"",
+            "status":"All",
+            "priority":[]
+        },
+        "todo":state.todo
+    }
+}
+
 const saveState = (state) => {
     try {
-        const serializedState = JSON.stringify(state);
+        const serializedState = JSON.stringify(stateInitSave(state));
         localStorage.setItem('Todo-APP-State-Redux', serializedState);
     } catch (error) {
         return undefined;

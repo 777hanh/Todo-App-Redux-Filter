@@ -15,6 +15,7 @@ const TodoList = () => {
     const searchPriority = useSelector((state) => state.filter.priority);
     //List Todo filterd by searchText (lowercase)
     const listTodo = useSelector((state) => {
+        console.log(typeof state.todo)
         const todoListFilter = state.todo.todo.filter(item => {
             if (searchStatus === 'All') {
                 return (searchPriority.length ?
